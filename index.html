@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+
+    <div class="label-form">
+        <h3>Ayarlar</h3>
+
+        <div class="label-form__row" id="count">
+            <label>
+                <span>Etiket Sayısı:</span>
+                <input type="number" min="1" max="10000" value="28"></input>
+            </label>
+        </div>
+
+        <div class="label-form__row" id="width">
+            <label>
+                <span>Genişlik (%):</span>
+                <input type="number" min="1" max="100" value="25"></input>
+            </label>
+        </div>
+
+        <div class="label-form__row" id="font">
+            <label>
+                <span>Yazı Tipi:</span>
+                <select>
+                    <option value="gabriola">Gabriola</option>
+                    <option value="helvetica">Helvetica</option>
+                    <option value="arial">Arial</option>
+                    <option value="georgia">Georgia</option>
+                    <option value="times">Times New Roman</option>
+                    <option value="gill sans">Gill Sans</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="label-form__row" id="style">
+            <label>
+                <span>Yazı Stili:</span>
+                <select>
+                    <option value="italic">İtalik</option>
+                    <option value="normal">Normal</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="label-form__row" id="weight">
+            <label>
+                <span>Yazı Kalınlığı:</span>
+                <select>
+                    <option value="100">En İnce</option>
+                    <option value="200">Çok İnce</option>
+                    <option value="300">Biraz ince</option>
+                    <option value="400">İncemsi</option>
+                    <option value="500">Normal</option>
+                    <option value="600">Kalınımsı</option>
+                    <option value="700">Biraz Kalın</option>
+                    <option value="800">Çok Kalın</option>
+                    <option value="900">En Kalın</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="label-form__row label-form__row--inline" id="text1">
+            <h3>Yazı 1 Ayarları</h3>
+            <label>
+                <span>Aktif?:</span>
+                <input type="checkbox" checked></input>
+            </label>
+            <label>
+                <span>İçerik:</span>
+                <input type="text" value="Yazı 1"></input>
+            </label>
+            <label>
+                <span>Boyut:</span>
+                <input type="number" min="1" max="96" value="22"></input>
+            </label>
+        </div>
+
+        <div class="label-form__row label-form__row--inline" id="text2">
+            <h3>Yazı 2 Ayarları</h3>
+            <label>
+                <span>Aktif?:</span>
+            <input type="checkbox" checked></input>
+            </label>
+            <label>
+                <span>İçerik:</span>
+                <input type="text" value="Yazı 2"></input>
+            </label>
+            <label>
+                <span>Boyut:</span>
+                <input type="number" min="1" max="96" value="16"></input>
+            </label>
+        </div>
+
+    </div>
+
+    <div id="label-list"></div>
+
+    <script type="text/javascript" src="src/app.js"></script>
+</body>
+</html>
