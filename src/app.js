@@ -1,4 +1,6 @@
-function $id(id) {
+var CKEDITOR = CKEDITOR || {}
+
+function byID(id) {
   return document.getElementById(id)
 }
 
@@ -7,129 +9,85 @@ var App = {
   state: {
     count: 0,
     width: 0,
-    font: '',
-    style: '',
-    weight: '',
-    texts: []
+    editorContent: ''
   },
 
-  labelTemplate(texts) {
-    var { width } = this.state
+  labelTemplate(content) {
+    var { width, height } = this.state
     var labelStyle = `
-      width: ${width}%;
+      width: ${width}px;
+      height: ${height}px;
     `
-
-    var activeTexts = texts.filter(text => text.isActive)
 
     return `
       <div class="label-container" style="${labelStyle}">
-        ${ activeTexts.reduce((prev, text) => prev + `
-          <p style="font-size: ${text.size}px" class="label-text">
-            ${text.value}
-          </p>
-        `, '') }
+        ${content}
       </div>
     `
   },
 
   renderLabelList() {
-    var outputStyle = `;
-      font-family: ${this.state.font};
-      font-style: ${this.state.style};
-      font-weight: ${+this.state.weight}
-    `
-      console.log(outputStyle)
-
     var outputHTML = ''
     var i = 0
     while (i++ < +this.state.count) {
-      outputHTML += this.labelTemplate(this.state.texts)
+      outputHTML += this.labelTemplate(this.state.editorContent)
     }
     this.target.innerHTML = outputHTML
-
-    this.target.style.cssText = outputStyle
   },
 
-  handleChange(prop) {
-    return event => {
-      this.state[prop] = event.target.value
-      this.renderLabelList()
-    }
+  renderEditorContainer() {
+    this.editorContainer.style.cssText += `
+      width: ${this.state.width}px;
+      height: ${this.state.height + 400}px;
+    `
   },
 
-  toggleText(textIndex) {
-    var text = this.state.texts[textIndex]
-    text.isActive = !text.isActive
+  render() {
     this.renderLabelList()
-
-    var container = this.$texts[textIndex]
-    container.classList.toggle('disabled')
-
-    var value = container.querySelector('input[type="text"]')
-    var size = container.querySelector('input[type="number"]')
-    value.disabled = !text.isActive
-    size.disabled = !text.isActive
+    this.renderEditorContainer()
   },
 
-  handleTextChange(textIndex) {
+  onChange(what, type) {
     return event => {
-      this.state.texts[textIndex].value = event.target.value
-      this.renderLabelList()
-    }
-  },
-
-  handleTextSizeChange(textIndex) {
-    return event => {
-      this.state.texts[textIndex].size = event.target.value
-      this.renderLabelList()
+      var _value = event.target.value
+      var value
+      if (type == 'number') {
+        value = +_value
+      }
+      this.state[what] = value
+      this.render()
     }
   },
 
   init() {
-    this.target = $id('label-list')
+    this.target = byID('label-list')
+    this.editorContainer = byID('editor-container')
 
-    var count = $id('count').querySelector('input')
-    count.addEventListener('input', this.handleChange.call(this, 'count'))
+    CKEDITOR.config.height = 'auto'
+    CKEDITOR.config.width = 'auto'
+    this.editor = CKEDITOR.replace('editor-content')
 
-    var width = $id('width').querySelector('input')
-    width.addEventListener('input', this.handleChange.call(this, 'width'))
+    this.editor.on('change', event => {
+      this.state.editorContent = event.editor.getData()
+      this.render()
+    })
 
-    var font = $id('font').querySelector('select')
-    font.addEventListener('input', this.handleChange.call(this, 'font'))
+    var count = byID('label-count')
+    count.addEventListener('input', this.onChange.call(this, 'count', 'number'))
 
-    var style = $id('style').querySelector('select')
-    style.addEventListener('input', this.handleChange.call(this, 'style'))
+    var width = byID('label-width')
+    width.addEventListener('input', this.onChange.call(this, 'width', 'number'))
 
-    var weight = $id('weight').querySelector('select')
-    weight.addEventListener('input', this.handleChange.call(this, 'weight'))
+    var height = byID('label-height')
+    height.addEventListener('input', this.onChange.call(this, 'height', 'number'))
 
     Object.assign(this.state, {
-      count: count.value,
-      width: width.value,
-      font: font.value,
-      style: style.value,
-      weight: weight.value
+      count: +count.value,
+      width: +width.value,
+      height: +height.value
     })
 
-    this.$texts = Array.from(document.querySelectorAll('[id^="text"]'))
-    this.$texts.forEach((text, index) => {
-      var check = text.querySelector('input[type="checkbox"]')
-      check.addEventListener('change', this.toggleText.bind(this, index))
-
-      var value = text.querySelector('input[type="text"]')
-      value.addEventListener('input', this.handleTextChange.call(this, index))
-
-      var size = text.querySelector('input[type="number"]')
-      size.addEventListener('input', this.handleTextSizeChange.call(this, index))
-
-      this.state.texts.push({
-        value: value.value,
-        size: size.value,
-        isActive: !value.disabled
-      })
-    })
-
-    this.renderLabelList()
+    this.render()
   }
 }
 

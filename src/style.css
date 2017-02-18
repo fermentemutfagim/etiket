@@ -1,5 +1,5 @@
 body {
-    font: normal 14px/1.6 helvetica, arial, sans-serif;
+    font: normal 14px/1.4 helvetica, arial, sans-serif;
 }
 
 .label-form {
@@ -17,17 +17,12 @@ body {
     margin-right: 4em;
 }
 
-.label-form__row label {
+.label-form__row-label {
     display: block;
     min-height: 2.5em;
 }
 
-.label-form__row span {
-    display: inline-block;
-    min-width: 85px;
-}
-
-.label-form__row input {
+.label-form__row-input {
     padding: .5em;
 }
 
@@ -44,18 +39,27 @@ body {
 }
 
 #label-list {
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 16px;
-    line-height: 1.6;
+    width: 762px;
+    height: 1124px;
+    margin: 55px auto 0;
+    overflow: hidden;
 }
 
 .label-container {
-    padding: 0 2em;
-    box-sizing: border-box;
-    border: 1px dashed #555;
+    float: left;
+    padding: 0 20px;
     min-width: 20px;
     min-height: 20px;
+    box-sizing: border-box;
+    border: 1px dashed #aaa;
+}
+
+.label-container:nth-child(even) {
+    margin-left: 10px;
+}
+
+.label-container p {
+    margin: .5em;
 }
 
 @media print {
