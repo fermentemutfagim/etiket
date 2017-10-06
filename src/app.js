@@ -6,17 +6,34 @@ function byID(id) {
 
 var App = {
 
+  containerWidth: 762,
+
   state: {
     count: 0,
-    width: 0,
+    columnCount: 0,
+    columnGap: 0,
     editorContent: ''
   },
 
-  labelTemplate(content) {
-    var { width, height } = this.state
+  calculateWidth() {
+    var { columnCount, columnGap } = this.state
+    var base = this.containerWidth / columnCount
+    var gap = ( columnGap * (columnCount - 1) ) / columnCount
+    return base - gap
+  },
+
+  labelTemplate(content, index) {
+    var { columnCount, columnGap, height } = this.state
+    var width = this.calculateWidth()
+
+    var activeRow = Math.floor(index / columnCount)
+    var activeColumn = index % columnCount
+
     var labelStyle = `
       width: ${width}px;
       height: ${height}px;
+      top: ${activeRow * height}px;
+      left: ${(activeColumn * width) + (columnGap * activeColumn)}px;
     `
 
     return `
@@ -30,15 +47,16 @@ var App = {
     var outputHTML = ''
     var i = 0
     while (i++ < +this.state.count) {
-      outputHTML += this.labelTemplate(this.state.editorContent)
+      ;(function() {
+        outputHTML += this.labelTemplate(this.state.editorContent, i - 1)
+      }.bind(this))(i)
     }
     this.target.innerHTML = outputHTML
   },
 
   renderEditorContainer() {
     this.editorContainer.style.cssText += `
-      width: ${this.state.width}px;
-      height: ${this.state.height + 400}px;
+      height: ${this.state.height + 300}px;
     `
   },
 
@@ -75,15 +93,19 @@ var App = {
     var count = byID('label-count')
     count.addEventListener('input', this.onChange.call(this, 'count', 'number'))
 
-    var width = byID('label-width')
-    width.addEventListener('input', this.onChange.call(this, 'width', 'number'))
+    var columnCount = byID('column-count')
+    columnCount.addEventListener('input', this.onChange.call(this, 'columnCount', 'number'))
+
+    var columnGap = byID('column-gap')
+    columnGap.addEventListener('input', this.onChange.call(this, 'columnGap', 'number'))
 
     var height = byID('label-height')
     height.addEventListener('input', this.onChange.call(this, 'height', 'number'))
 
     Object.assign(this.state, {
       count: +count.value,
-      width: +width.value,
+      columnCount: +columnCount.value,
+      columnGap: +columnGap.value,
       height: +height.value
     })
 

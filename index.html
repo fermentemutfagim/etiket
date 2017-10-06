@@ -3,50 +3,65 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="src/style.css" />
+    <title>Etiket Üreteci</title>
     <script src="src/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 
-    <div class="label-form">
+    <div class="container">
         <h3>Ayarlar</h3>
 
-        <div class="label-form__row">
-            <label for="label-count" class="label-form__row-label">Etiket Sayısı:</label>
-            <input
-                class="label-form__row-input"
-                id="label-count"
-                name="label-count"
-                type="number"
-                min="1"
-                max="10000"
-                value="14" />
+        <div class="settings-form">
+            <div class="settings-form__field">
+                <label for="label-count" class="settings-form__field-label">Etiket Sayısı:</label>
+                <input
+                    class="settings-form__field-input"
+                    id="label-count"
+                    name="label-count"
+                    type="number"
+                    min="1"
+                    max="10000"
+                    value="24" />
+            </div>
+
+            <div class="settings-form__field">
+                <label for="label-height" class="settings-form__field-label">Yükseklik:</label>
+                <input
+                    class="settings-form__field-input"
+                    id="label-height"
+                    name="label-height"
+                    type="number"
+                    min="1"
+                    max="10000"
+                    value="128.5" />
+            </div>
+
+            <div class="settings-form__field">
+                <label for="column-count" class="settings-form__field-label">Kolon sayısı:</label>
+                <input
+                    class="settings-form__field-input"
+                    id="column-count"
+                    name="column-count"
+                    type="number"
+                    min="1"
+                    max="100"
+                    value="3" />
+            </div>
+
+            <div class="settings-form__field">
+                <label for="column-gap" class="settings-form__field-label">Kolonlar-arası boşluk:</label>
+                <input
+                    class="settings-form__field-input"
+                    id="column-gap"
+                    name="column-gap"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value="10" />
+            </div>
         </div>
 
-        <div class="label-form__row">
-            <label for="label-width" class="label-form__row-label">Genişlik:</label>
-            <input
-                class="label-form__row-input"
-                id="label-width"
-                name="label-width"
-                type="number"
-                min="1"
-                max="10000"
-                value="375" />
-        </div>
-
-        <div class="label-form__row">
-            <label for="label-height" class="label-form__row-label">Yükseklik:</label>
-            <input
-                class="label-form__row-input"
-                id="label-height"
-                name="label-height"
-                type="number"
-                min="1"
-                max="10000"
-                value="144.5" />
-        </div>
-
-        <div class="label-form__row label-form__row--inline">
+        <div class="wysiwg-container">
             <h3>İçerik</h3>
             <div id="editor-container">
                 <textarea id="editor-content" name="editor-content"></textarea>

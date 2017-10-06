@@ -2,31 +2,31 @@ body {
     font: normal 14px/1.4 helvetica, arial, sans-serif;
 }
 
-.label-form {
+.container {
     display: inline-block;
     overflow: hidden;
     padding: 1em 2em 2em;
 }
 
-.label-form__row {
-    position: relative;
+.settings-form {
+    overflow: hidden;
 }
 
-.label-form__row--inline {
+.settings-form__field {
     float: left;
     margin-right: 4em;
 }
 
-.label-form__row-label {
+.settings-form__field-label {
     display: block;
-    min-height: 2.5em;
+    min-height: 1.5em;
 }
 
-.label-form__row-input {
+.settings-form__field-input {
     padding: .5em;
 }
 
-.label-form__row.disabled::after {
+.settings-form__field.disabled::after {
     content: "";
     display: block;
     position: absolute;
@@ -41,21 +41,18 @@ body {
 #label-list {
     width: 762px;
     height: 1124px;
-    margin: 55px auto 0;
+    margin: 40px auto 0;
     overflow: hidden;
+    position: relative;
 }
 
 .label-container {
-    float: left;
+    position: absolute;
     padding: 0 20px;
     min-width: 20px;
     min-height: 20px;
     box-sizing: border-box;
     border: 1px dashed #aaa;
-}
-
-.label-container:nth-child(even) {
-    margin-left: 10px;
 }
 
 .label-container p,
@@ -66,12 +63,16 @@ body {
     line-height: 1.1;
 }
 
+.wysiwyg-container {
+    margin-top: 2em;
+}
+
 @media print {
     body {
         margin: 0;
     }
 
-    .label-form {
+    .container {
         display: none;
     }
 }
